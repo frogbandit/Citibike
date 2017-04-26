@@ -1,70 +1,61 @@
+function create_table(people, months) {
+    
+    for (person_index in people) {
+        
+        person = people[person_index]
+        $('#container').append('<table class="table table-striped" id=' + person_index + '> \
+        <caption>' + person + '</caption><thead><tr><th>Month</th><th>Project</th><th>Skill</th><th>FTE</th></tr></thead> \
+        <tbody></tbody></table>');
+            
+        if (!(Object.keys(overall_dict[person]).length === 0 && overall_dict[person].constructor === Object)) {
+            projects = overall_dict[person]
+            console.log(projects);
+            for (var i in projects) {
+
+                project = projects[i];
+                project_name = i
+
+                for (var k in project){
+                    skill = project[k][0]
+                    FTE_list = project[k][1]
+                    for (var l in FTE_list){
+                        month = months_list[l]
+                        if (containsObject(month, months)){
+                            $('#' + person_index + ' tr:last').after('<tr><td>' + month + '</td><td>' + project_name + '</td><td>' + skill + '</td><td>' + FTE_list[l] + '</td></tr>')
+                        }
+                    }
+                }
+            }
+        } else {
+            $('#' + person_index + ' tr:last').after('<tr><td>' + '' + '</td><td>' + ' ' + '</td><td>' + ' ' + '</td><td>' + ' ' + '</td></tr>')
+        }
+    }
+};
+
+
 function get_most_frequented_places() {
-    var div = document.createElement("div");
-    div.id = "most_frequented_places"
-    document.getElementById("container").appendChild(div);
+    months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
 
-    $.getJSON('/static/data/dummy_most_frequented_places.json', function(jsonData) {
-        var chart;
 
-        var chartOptions = {
-            chart: {
-                type: 'column',
-                renderTo: 'most_frequented_places'
-            },
-            title: {
-                text: 'Most Frequented Places'
-            },
-            subtitle: {
-                text: 'Source: CitiBikeNYC.com'
-            },
-            xAxis: {
-                categories: [
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                    'Jan',
-                    'Feb',
-                    'Mar',
-                    'Apr',
-                    'May',
-                    'Jun'
-                ],
-                title: {
-                    text: "Months"
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Number of Trips'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px"></span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y} trips</b></td></tr>',
-                footerFormat: '</table>',
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: 'Place One',
-                data: jsonData['Place One']
-            }, {
-                name: 'Place Two',
-                data: jsonData['Place Two']
-            }]
+    $.getJSON('/static/data/most_frequented_places.json', function(jsonData) {
+        console.log(jsonData);
 
-        };
+        $('#container').append('<h4> Most Frequented Places by Month </h4>')
 
-        chart = new Highcharts.Chart(chartOptions);
+        for (month_index in months) {
+            month = months[month_index]
+            $('#container').append('<table class="table table-striped" id=' + month_index + '> \
+                <caption>' + month + '</caption><thead><tr><th>Place</th></tr></thead> \
+                <tbody></tbody></table>');
+
+            
+            places = jsonData[month]
+            console.log(month)
+            for (var i in places){
+                place = places[i]
+                $('#' + month_index + ' tr:last').after('<tr><td>' + place + '</td></tr>')
+            }
+        }
     });
   
 }
@@ -76,7 +67,7 @@ function get_average_duration() {
     div.id = "average_duration"
     document.getElementById("container").appendChild(div);
 
-    $.getJSON('/static/data/dummy_average_duration.json', function(jsonData) {
+    $.getJSON('/static/data/average_duration.json', function(jsonData) {
         console.log(jsonData);
 
         var chart;
@@ -140,13 +131,13 @@ function get_average_duration() {
     });
 }
 
-function get_gender() {
+function get_number_trips() {
 
     var div = document.createElement("div");
-    div.id = "gender"
+    div.id = "number_trips"
     document.getElementById("container").appendChild(div);
 
-    $.getJSON('/static/data/dummy_gender.json', function(jsonData) {
+    $.getJSON('/static/data/number_trips.json', function(jsonData) {
         console.log(jsonData);
 
         var chart;
@@ -154,10 +145,10 @@ function get_gender() {
         var chartOptions = {
             chart: {
                 type: 'column',
-                renderTo: 'gender'
+                renderTo: 'number_trips'
             },
             title: {
-                text: 'Gender Breakdown'
+                text: 'Number of Trips Per Month'
             },
             subtitle: {
                 text: 'Source: CitiBikeNYC.com'
@@ -189,7 +180,77 @@ function get_gender() {
             tooltip: {
                 headerFormat: '<span style="font-size:10px"></span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y} trips</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.0f} trips</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Number of Trips',
+                data: jsonData['Trips per Month']
+            }]
+
+        };
+
+        chart = new Highcharts.Chart(chartOptions);
+    });
+}
+
+function get_gender() {
+
+    var div = document.createElement("div");
+    div.id = "gender"
+    document.getElementById("container").appendChild(div);
+
+    $.getJSON('/static/data/gender.json', function(jsonData) {
+        console.log(jsonData);
+
+        var chart;
+
+        var chartOptions = {
+            chart: {
+                type: 'column',
+                renderTo: 'gender'
+            },
+            title: {
+                text: 'Gender Breakdown Per Month'
+            },
+            subtitle: {
+                text: 'Source: CitiBikeNYC.com'
+            },
+            xAxis: {
+                categories: [
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun'
+                ],
+                title: {
+                    text: "Months"
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of Trips'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px"></span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.0f} trips</b></td></tr>',
                 footerFormat: '</table>',
                 useHTML: true
             },
@@ -206,8 +267,8 @@ function get_gender() {
                 name: 'Male',
                 data: jsonData['Male']
             }, {
-                name: 'Neutral',
-                data: jsonData['Neutral']
+                name: 'Unknown',
+                data: jsonData['Unknown']
             }]
 
         };
@@ -216,8 +277,7 @@ function get_gender() {
     });
 }
 
-
-
 get_most_frequented_places()
 get_average_duration()
+get_number_trips()
 get_gender()
