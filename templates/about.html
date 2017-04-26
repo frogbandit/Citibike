@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" context="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Citibike Data</title>
+    <meta name="description" content="Citibike Data">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Citibike Data</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href='/about'>About</a> </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div id="container" style="height: 100%">
+
+    <h1 id="citibike">NYCBike</h1>
+
+    <p>Citibike Project for <strong>IEOR4572 Python Data Analytics</strong></p>
+    <p>Clara Cheng, Kevin Ye, James Xue</p>
+
+    <h2 id="applicationinformationanddevelopment">Application Information and Development</h2>
+
+    <p>For this application, we built it using <strong>Python/Flask</strong>. We parsed the data using several Python scripts, and loaded it via JSON using jQuery. Finally, the visualizations were done using <strong>Highcharts</strong>, a popular library for interactive Javascript charts. </p>
+
+    <p>Currently, our application answers the following questions:</p>
+
+    <ul>
+    <li>What are the most frequented place people ride their bike to per month? Per year?</li>
+
+    <li>What is the average duration of a bike trip to per month? Per year?</li>
+
+    <li>What are the number of trips per month? Per year?</li>
+
+    <li>How many unique locations are there?</li>
+
+    <li>Which gender bikes more?</li>
+    </ul>
+
+    <p>Our application uses bike data for the dates between July 2013 and February 2014.</p>
+
+    <h2 id="citibikedatainformation">Citibike Data Information</h2>
+
+    <p>The <a href="https://www.citibikenyc.com/system-data">Citibike website</a> publishes downloadable files of Citi Bike trip data. The data includes:</p>
+
+    <ul>
+    <li>Trip Duration (seconds)</li>
+
+    <li>Start Time and Date</li>
+
+    <li>Stop Time and Date</li>
+
+    <li>Start Station Name</li>
+
+    <li>End Station Name</li>
+
+    <li>Station ID</li>
+
+    <li>Station Lat/Long</li>
+
+    <li>Bike ID</li>
+
+    <li>User Type (Customer = 24-hour pass or 7-day pass user; Subscriber = Annual Member)</li>
+
+    <li>Gender (Zero=unknown; 1=male; 2=female)</li>
+
+    <li>Year of Birth</li>
+    </ul>
+
+    <p>This data has been processed to remove trips that are taken by staff as they service and inspect the system, trips that are taken to/from any of our “test” stations (which we were using more in June and July 2013), and any trips that were below 60 seconds in length (potentially false starts or users trying to re-dock a bike to ensure it's secure).</p>    
+    
+    </div>
+
+</body>
+
+</html>
