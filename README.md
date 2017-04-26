@@ -6,7 +6,6 @@ Clara Cheng, Kevin Ye, James Xue
 For this application, we built it using **Python/Flask**. We parsed the data using several Python scripts, and loaded it via JSON using jQuery. Finally, the visualizations were done using **Highcharts**, a popular library for interactive Javascript charts. 
 
 Currently, our application answers the following questions:
-* What are the most frequented place people ride their bike to per month? Per year?
 * What is the average duration of a bike trip to per month? Per year?
 * What are the number of trips per month? Per year?
 * Which gender bikes more?

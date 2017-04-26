@@ -32,35 +32,6 @@ function create_table(people, months) {
     }
 };
 
-
-function get_most_frequented_places() {
-    months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-
-
-    $.getJSON('/static/data/most_frequented_places.json', function(jsonData) {
-        console.log(jsonData);
-
-        $('#container').append('<h4> Most Frequented Places by Month </h4>')
-
-        for (month_index in months) {
-            month = months[month_index]
-            $('#container').append('<table class="table table-striped" id=' + month_index + '> \
-                <caption>' + month + '</caption><thead><tr><th>Place</th></tr></thead> \
-                <tbody></tbody></table>');
-
-            
-            places = jsonData[month]
-            console.log(month)
-            for (var i in places){
-                place = places[i]
-                $('#' + month_index + ' tr:last').after('<tr><td>' + place + '</td></tr>')
-            }
-        }
-    });
-  
-}
-
-
 function get_average_duration() {
 
     var div = document.createElement("div");
@@ -104,7 +75,7 @@ function get_average_duration() {
             },
             yAxis: {
                 title: {
-                    text: 'Number of Minutes'
+                    text: 'Duration'
                 }
             },
             tooltip: {
@@ -218,7 +189,7 @@ function get_gender() {
                 renderTo: 'gender'
             },
             title: {
-                text: 'Gender Breakdown Per Month'
+                text: 'Number of Trips by Gender Per Month'
             },
             subtitle: {
                 text: 'Source: CitiBikeNYC.com'
@@ -277,7 +248,112 @@ function get_gender() {
     });
 }
 
-get_most_frequented_places()
+function get_gender_duration() {
+
+    var div = document.createElement("div");
+    div.id = "gender_duration"
+    document.getElementById("container").appendChild(div);
+
+    $.getJSON('/static/data/gender_trip_duration.json', function(jsonData) {
+        console.log(jsonData);
+
+        var chart;
+
+        var chartOptions = {
+            chart: {
+                type: 'column',
+                renderTo: 'gender_duration'
+            },
+            title: {
+                text: 'Duration of Trips by Gender Per Month'
+            },
+            subtitle: {
+                text: 'Source: CitiBikeNYC.com'
+            },
+            xAxis: {
+                categories: [
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun'
+                ],
+                title: {
+                    text: "Months"
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Duration'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px"></span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.0f} minutes</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Female',
+                data: jsonData['Female']
+            }, {
+                name: 'Male',
+                data: jsonData['Male']
+            }, {
+                name: 'Unknown',
+                data: jsonData['Unknown']
+            }]
+
+        };
+
+        chart = new Highcharts.Chart(chartOptions);
+    });
+}
+
+
+function get_most_frequented_places() {
+    months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+
+
+    $.getJSON('/static/data/most_frequented_places.json', function(jsonData) {
+        console.log(jsonData);
+
+        $('#container').append('<h4> Most Frequented Places by Month </h4>')
+
+        for (month_index in months) {
+            month = months[month_index]
+            $('#container').append('<table class="table table-striped" id=' + month_index + '> \
+                <caption>' + month + '</caption><thead><tr><th>Place</th></tr></thead> \
+                <tbody></tbody></table>');
+
+            
+            places = jsonData[month]
+            console.log(month)
+            for (var i in places){
+                place = places[i]
+                $('#' + month_index + ' tr:last').after('<tr><td>' + place + '</td></tr>')
+            }
+        }
+    });
+  
+}
+
 get_average_duration()
 get_number_trips()
 get_gender()
+get_gender_duration()
+// get_most_frequented_places()
