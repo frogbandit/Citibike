@@ -165,7 +165,7 @@ def mostFrequentedPlace(bikeData):
         for i in end_station:
             monthcounts[i] = monthcounts.get(i, 0) + 1
 
-        topten = sorted(monthcounts.iteritems(), key=lambda (k, v): (-v, k))[:10]
+        topten = sorted(monthcounts.iteritems(), key=lambda (k, v): (-v, k))[:5]
         frequentedPlace[monthstemp[count]] = topten
         count += 1
 
