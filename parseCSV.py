@@ -76,8 +76,8 @@ def tripdurationgender(bikeData):
         genderList['Female'].append(female/float(femaleCount)/float(60))
 
     print genderList
-    open("gendtripduration.txt", 'w').close()
-    json.dump(genderList, open("gendtripduration.txt",'w'))
+    open("gendertripduration.txt", 'w').close()
+    json.dump(genderList, open("gendertripduration.txt",'w'))
     print("Done writing average genders bike time duration to file.")
 
 
@@ -147,16 +147,16 @@ def averageDuration(bikeData):
     print("Done writing average duration to file.")
 
 
-# def mostFrequentedPlace(bikeData):
-#     # format
-#     # {'month': {'July': {'birth year': ['\\N'], 'end station longitude': ['-73.98165557'], 'bikeid': ['16950'], 'start station id': ['164'], 'start station longitude': ['-73.97032517'], 'end station latitude': ['40.73221853'], 'end station name': ['1 Ave & E 15 St'], 'start station latitude': ['40.75323098'], 'end staxtion id': ['504'], 'usertype': ['Customer'], 'stoptime': ['2013-07-01 00:10:34'], 'starttime': ['2013-07-01 00:00:00'], 'gender': ['0'], 'tripduration': ['634'], 'start station name': ['E 47 St & 2 Ave']}}}
-#
-#     # most frequented place
-#     frequentedPlace = {}
-#     months = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'February']
-#     for month in months:
-#         start_station = bikeData['month'][month]['start station name']
-#         end_stattion = bikeData['month'][month]['end station name']
+def mostFrequentedPlace(bikeData):
+    # format
+    # {'month': {'July': {'birth year': ['\\N'], 'end station longitude': ['-73.98165557'], 'bikeid': ['16950'], 'start station id': ['164'], 'start station longitude': ['-73.97032517'], 'end station latitude': ['40.73221853'], 'end station name': ['1 Ave & E 15 St'], 'start station latitude': ['40.75323098'], 'end staxtion id': ['504'], 'usertype': ['Customer'], 'stoptime': ['2013-07-01 00:10:34'], 'starttime': ['2013-07-01 00:00:00'], 'gender': ['0'], 'tripduration': ['634'], 'start station name': ['E 47 St & 2 Ave']}}}
+
+    # most frequented place
+    frequentedPlace = {}
+    months = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'February']
+    for month in months:
+        start_station = bikeData['month'][month]['start station name']
+        end_stattion = bikeData['month'][month]['end station name']
 #
 
 
