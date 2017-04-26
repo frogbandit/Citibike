@@ -43,7 +43,7 @@ def parseCSV():
     # averageDuration(bikeData)
     # trips(bikeData)
     # gender(bikeData)
-    tripdurationgender(bikeData)
+    # tripdurationgender(bikeData)
 
 def tripdurationgender(bikeData):
     genderList = {'Unknown':[], 'Male':[], 'Female':[]}
