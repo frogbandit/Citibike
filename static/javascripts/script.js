@@ -326,27 +326,33 @@ function get_gender_duration() {
 
 
 function get_most_frequented_places() {
-    months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+    months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb']
 
 
     $.getJSON('/static/data/most_frequented_places.json', function(jsonData) {
         console.log(jsonData);
 
-        $('#container').append('<h4> Most Frequented Places by Month </h4>')
+        $('#container').append('<h4><center> Most Frequented Places by Month </center></h4>')
+
+        $('#container').append('<table class="table table-striped" id="frequented_table"> \
+                <caption></caption><thead><tr><th>Month</th> \
+                <th>1</th><th>Counts</th><th>2</th><th>Counts</th><th>3</th><th>Counts</th><th>4</th><th>Counts</th><th>5</th><th>Counts</th> \
+                </tr></thead><tbody></tbody></table>');
 
         for (month_index in months) {
             month = months[month_index]
-            $('#container').append('<table class="table table-striped" id=' + month_index + '> \
-                <caption>' + month + '</caption><thead><tr><th>Place</th></tr></thead> \
-                <tbody></tbody></table>');
-
             
             places = jsonData[month]
             console.log(month)
+            table_string = '<tr>'
+            table_string += ('<td>' + month + '</td>')
             for (var i in places){
-                place = places[i]
-                $('#' + month_index + ' tr:last').after('<tr><td>' + place + '</td></tr>')
+                place = places[i][0]
+                count = places[i][1]
+                table_string += ('<td>' + place + '</td><td>' + count + '</td>')
             }
+            table_string += '</tr>'
+            $('#frequented_table tr:last').after(table_string)
         }
     });
   
@@ -356,4 +362,4 @@ get_average_duration()
 get_number_trips()
 get_gender()
 get_gender_duration()
-// get_most_frequented_places()
+get_most_frequented_places()
