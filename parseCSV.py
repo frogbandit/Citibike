@@ -39,11 +39,14 @@ def parseCSV():
     # json.dump(bikeData, open("bikedata.txt",'w'))
     # print("Done writing to file.")
 
-    # mostFrequentedPlace(bikeData)
+    mostFrequentedPlace(bikeData)
     # averageDuration(bikeData)
     # trips(bikeData)
     # gender(bikeData)
     # tripdurationgender(bikeData)
+
+# format
+# {'month': {'July': {'birth year': ['\\N'], 'end station longitude': ['-73.98165557'], 'bikeid': ['16950'], 'start station id': ['164'], 'start station longitude': ['-73.97032517'], 'end station latitude': ['40.73221853'], 'end station name': ['1 Ave & E 15 St'], 'start station latitude': ['40.75323098'], 'end staxtion id': ['504'], 'usertype': ['Customer'], 'stoptime': ['2013-07-01 00:10:34'], 'starttime': ['2013-07-01 00:00:00'], 'gender': ['0'], 'tripduration': ['634'], 'start station name': ['E 47 St & 2 Ave']}}}
 
 def tripdurationgender(bikeData):
     genderList = {'Unknown':[], 'Male':[], 'Female':[]}
@@ -148,16 +151,27 @@ def averageDuration(bikeData):
 
 
 def mostFrequentedPlace(bikeData):
-    # format
-    # {'month': {'July': {'birth year': ['\\N'], 'end station longitude': ['-73.98165557'], 'bikeid': ['16950'], 'start station id': ['164'], 'start station longitude': ['-73.97032517'], 'end station latitude': ['40.73221853'], 'end station name': ['1 Ave & E 15 St'], 'start station latitude': ['40.75323098'], 'end staxtion id': ['504'], 'usertype': ['Customer'], 'stoptime': ['2013-07-01 00:10:34'], 'starttime': ['2013-07-01 00:00:00'], 'gender': ['0'], 'tripduration': ['634'], 'start station name': ['E 47 St & 2 Ave']}}}
-
-    # most frequented place
     frequentedPlace = {}
+    counts = {}
     months = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'February']
+    monthstemp = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb']
+    count = 0
     for month in months:
+        monthcounts = {}
         start_station = bikeData['month'][month]['start station name']
         end_station = bikeData['month'][month]['end station name']
+        for i in start_station:
+            monthcounts[i] = monthcounts.get(i, 0) + 1
+        for i in end_station:
+            monthcounts[i] = monthcounts.get(i, 0) + 1
 
+        topten = sorted(monthcounts.iteritems(), key=lambda (k, v): (-v, k))[:10]
+        frequentedPlace[monthstemp[count]] = topten
+        count += 1
+
+    open("mostfrequentedplace.txt", 'w').close()
+    json.dump(frequentedPlace, open("mostfrequentedplace.txt",'w'))
+    print("Done writing most frequented place to file.")
 
 
 parseCSV()
