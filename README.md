@@ -9,7 +9,6 @@ Currently, our application answers the following questions:
 * What are the most frequented place people ride their bike to per month? Per year?
 * What is the average duration of a bike trip to per month? Per year?
 * What are the number of trips per month? Per year?
-* How many unique locations are there?
 * Which gender bikes more?
 
 Our application uses bike data for the dates between July 2013 and February 2014.

@@ -80,7 +80,6 @@ def tripdurationgender(bikeData):
     json.dump(genderList, open("gendertripduration.txt",'w'))
     print("Done writing average genders bike time duration to file.")
 
-
 def gender(bikeData):
     genderList = {'Unknown':[], 'Male':[], 'Female':[]}
 
@@ -106,6 +105,7 @@ def gender(bikeData):
     open("gender.txt", 'w').close()
     json.dump(genderList, open("gender.txt",'w'))
     print("Done writing genders to file.")
+
 
 
 
@@ -156,8 +156,8 @@ def mostFrequentedPlace(bikeData):
     months = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'February']
     for month in months:
         start_station = bikeData['month'][month]['start station name']
-        end_stattion = bikeData['month'][month]['end station name']
-#
+        end_station = bikeData['month'][month]['end station name']
+
 
 
 parseCSV()
