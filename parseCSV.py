@@ -42,7 +42,44 @@ def parseCSV():
     # mostFrequentedPlace(bikeData)
     # averageDuration(bikeData)
     # trips(bikeData)
-    gender(bikeData)
+    # gender(bikeData)
+    tripdurationgender(bikeData)
+
+def tripdurationgender(bikeData):
+    genderList = {'Unknown':[], 'Male':[], 'Female':[]}
+
+    months = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'February']
+    for month in months:
+        genders = bikeData['month'][month]['gender']
+        timeduration = bikeData['month'][month]['tripduration']
+        unknown = 0
+        unknownCount = 0
+        male = 0
+        maleCount = 0
+        female = 0
+        femaleCount = 0
+        for i in range(0, len(genders)):
+            if genders[i] == '0':
+                unknown += int(timeduration[i])
+                unknownCount += 1
+            elif genders[i] == '1':
+                male += int(timeduration[i])
+                maleCount += 1
+            elif genders[i] == '2':
+                female += int(timeduration[i])
+                femaleCount += 1
+
+
+
+        genderList['Unknown'].append(unknown/float(unknownCount)/float(60))
+        genderList['Male'].append(male/float(maleCount)/float(60))
+        genderList['Female'].append(female/float(femaleCount)/float(60))
+
+    print genderList
+    open("gendtripduration.txt", 'w').close()
+    json.dump(genderList, open("gendtripduration.txt",'w'))
+    print("Done writing average genders bike time duration to file.")
+
 
 def gender(bikeData):
     genderList = {'Unknown':[], 'Male':[], 'Female':[]}
@@ -69,7 +106,6 @@ def gender(bikeData):
     open("gender.txt", 'w').close()
     json.dump(genderList, open("gender.txt",'w'))
     print("Done writing genders to file.")
-
 
 
 
@@ -113,7 +149,7 @@ def averageDuration(bikeData):
 
 # def mostFrequentedPlace(bikeData):
 #     # format
-#     # {'month': {'July': {'birth year': ['\\N'], 'end station longitude': ['-73.98165557'], 'bikeid': ['16950'], 'start station id': ['164'], 'start station longitude': ['-73.97032517'], 'end station latitude': ['40.73221853'], 'end station name': ['1 Ave & E 15 St'], 'start station latitude': ['40.75323098'], 'end station id': ['504'], 'usertype': ['Customer'], 'stoptime': ['2013-07-01 00:10:34'], 'starttime': ['2013-07-01 00:00:00'], 'gender': ['0'], 'tripduration': ['634'], 'start station name': ['E 47 St & 2 Ave']}}}
+#     # {'month': {'July': {'birth year': ['\\N'], 'end station longitude': ['-73.98165557'], 'bikeid': ['16950'], 'start station id': ['164'], 'start station longitude': ['-73.97032517'], 'end station latitude': ['40.73221853'], 'end station name': ['1 Ave & E 15 St'], 'start station latitude': ['40.75323098'], 'end staxtion id': ['504'], 'usertype': ['Customer'], 'stoptime': ['2013-07-01 00:10:34'], 'starttime': ['2013-07-01 00:00:00'], 'gender': ['0'], 'tripduration': ['634'], 'start station name': ['E 47 St & 2 Ave']}}}
 #
 #     # most frequented place
 #     frequentedPlace = {}
