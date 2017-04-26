@@ -1,173 +1,223 @@
-// var startDate = '';
-// var endDate = '';
-var numTweets = '';
-var twitterHandle = '';
+function get_most_frequented_places() {
+    var div = document.createElement("div");
+    div.id = "most_frequented_places"
+    document.getElementById("container").appendChild(div);
 
-// $("#startDate").change(function(){
-//     startDate = $('#startDate').val();
-//     if ((startDate != '') && (endDate != '') && (twitterHandle != '')){
-//         console.log(twitterHandle, startDate, endDate)
-//         get_data(twitterHandle, startDate, endDate)
-//     }
-// })
+    $.getJSON('/static/data/dummy_most_frequented_places.json', function(jsonData) {
+        var chart;
 
-// $("#endDate").change(function(){
-//     endDate = $('#endDate').val();
-//     if ((startDate != '') && (endDate != '') && (twitterHandle != '')){
-//         console.log(twitterHandle, startDate, endDate)
-//         get_data(twitterHandle, startDate, endDate)
-//     }
-// })
+        var chartOptions = {
+            chart: {
+                type: 'column',
+                renderTo: 'most_frequented_places'
+            },
+            title: {
+                text: 'Most Frequented Places'
+            },
+            subtitle: {
+                text: 'Source: CitiBikeNYC.com'
+            },
+            xAxis: {
+                categories: [
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun'
+                ],
+                title: {
+                    text: "Months"
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of Trips'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px"></span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} trips</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Place One',
+                data: jsonData['Place One']
+            }, {
+                name: 'Place Two',
+                data: jsonData['Place Two']
+            }]
 
-$("#numTweets").change(function(){
-    numTweets = $('#numTweets').val();
-    if ((numTweets != '') && (twitterHandle != '')){
-        console.log(twitterHandle, numTweets)
-        get_data(twitterHandle, numTweets)
-    }
-})
+        };
 
-$("#twitterHandle").change(function(){
-    twitterHandle = $('#twitterHandle').val();
-    if ((numTweets != '') && (twitterHandle != '')){
-        console.log(twitterHandle, numTweets)
-        get_data(twitterHandle, numTweets)
-    }
-})
+        chart = new Highcharts.Chart(chartOptions);
+    });
+  
+}
 
 
-// some examples: ishantlguru, realDonaldTrump, justinbieber
-get_data('BarackObama', '10');
+function get_average_duration() {
 
-function get_data(twitterHandle, numTweets) {
-    $('#container').append('<div style="height: 800px" id="total_chart"></div>');
+    var div = document.createElement("div");
+    div.id = "average_duration"
+    document.getElementById("container").appendChild(div);
 
-    // $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {
-    $.getJSON('/getSentimentList/' + twitterHandle + '/' + numTweets, function (data) {
-    // $.getJSON('/getSentimentList/therealjamesxue', function (data) {
+    $.getJSON('/static/data/dummy_average_duration.json', function(jsonData) {
+        console.log(jsonData);
 
-        console.log(data)
+        var chart;
 
-        series_list = []
+        var chartOptions = {
+            chart: {
+                type: 'column',
+                renderTo: 'average_duration'
+            },
+            title: {
+                text: 'Average Duration Per Month'
+            },
+            subtitle: {
+                text: 'Source: CitiBikeNYC.com'
+            },
+            xAxis: {
+                categories: [
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun'
+                ],
+                title: {
+                    text: "Months"
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of Minutes'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px"></span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} minutes</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Average Duration',
+                data: jsonData['Average Duration']
+            }]
 
-        new_data_angry = []
-        for (index in data['angry']){
-            new_data_angry.push(data['angry'][index].slice(1, 3))
-        }
+        };
 
-        new_data_joy = []
-        for (index in data['joy']){
-            new_data_joy.push(data['joy'][index].slice(1, 3))
-        }
+        chart = new Highcharts.Chart(chartOptions);
+    });
+}
 
-        new_data_sadness = []
-        for (index in data['sadness']){
-            new_data_sadness.push(data['sadness'][index].slice(1, 3))
-        }
+function get_gender() {
 
-        new_data_fear = []
-        for (index in data['fear']){
-            new_data_fear.push(data['fear'][index].slice(1, 3))
-        }
+    var div = document.createElement("div");
+    div.id = "gender"
+    document.getElementById("container").appendChild(div);
 
-        new_data_disgust = []
-        for (index in data['disgust']){
-            new_data_disgust.push(data['disgust'][index].slice(1, 3))
-        }
+    $.getJSON('/static/data/dummy_gender.json', function(jsonData) {
+        console.log(jsonData);
 
-        series_list.push({
-            type: 'line',
-            name: 'Angry',
-            color: '#EC4422',
-            data: new_data_angry
-        })
+        var chart;
 
-        series_list.push({
-            type: 'line',
-            name: 'Joy',
-            color: '#F8E250',
-            data: new_data_joy
-        })
+        var chartOptions = {
+            chart: {
+                type: 'column',
+                renderTo: 'gender'
+            },
+            title: {
+                text: 'Gender Breakdown'
+            },
+            subtitle: {
+                text: 'Source: CitiBikeNYC.com'
+            },
+            xAxis: {
+                categories: [
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun'
+                ],
+                title: {
+                    text: "Months"
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of Trips'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px"></span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} trips</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Female',
+                data: jsonData['Female']
+            }, {
+                name: 'Male',
+                data: jsonData['Male']
+            }, {
+                name: 'Neutral',
+                data: jsonData['Neutral']
+            }]
 
-        series_list.push({
-            type: 'line',
-            name: 'Sadness',
-            color: '#2A58A5',
-            data: new_data_sadness
-        })
+        };
 
-        series_list.push({
-            type: 'line',
-            name: 'Fear',
-            color: '#8258A2',
-            data: new_data_fear
-        })
-
-        series_list.push({
-            type: 'line',
-            name: 'Disgust',
-            color: '#73BB4B',
-            data: new_data_disgust
-        })
-
-        console.log(series_list);
-
-        create_chart(twitterHandle);
+        chart = new Highcharts.Chart(chartOptions);
     });
 }
 
 
- function create_chart(twitterHandle) {
-        
-        Highcharts.chart('container', {
-            chart: {
-                zoomType: 'x'
-            },
-            title: {
-                text: 'Tweet Sentiment Data for @' + twitterHandle + ' over time'
-            },
-            subtitle: {
-                text: document.ontouchstart === undefined ?
-                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-            },
-            xAxis: {
-                type: 'datetime'
-            },
-            yAxis: {
-                title: {
-                    text: 'Sentiment Score'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
 
-            series: series_list
-        });
-}
+get_most_frequented_places()
+get_average_duration()
+get_gender()
